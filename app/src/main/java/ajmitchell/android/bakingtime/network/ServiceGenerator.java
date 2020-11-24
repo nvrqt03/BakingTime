@@ -1,4 +1,4 @@
-package ajmitchell.android.bakingtime;
+package ajmitchell.android.bakingtime.network;
 
 import ajmitchell.android.bakingtime.network.BakingApi;
 import ajmitchell.android.bakingtime.utils.Constants;
@@ -9,20 +9,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     private static Retrofit retrofit;
+    private static BakingApi bakingApi;
 
-    private static Retrofit getRetrofitInstance() {
-        if (retrofit == null) {
+    public static BakingApi getBakingApi() {
+        if (bakingApi == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(Constants.BASE_URL)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
+            bakingApi = retrofit.create(BakingApi.class);
         }
-        return retrofit;
-    }
-    private static BakingApi bakingApi = retrofit.create(BakingApi.class);
-
-    public static BakingApi getBakingApi() {
         return bakingApi;
     }
 }
