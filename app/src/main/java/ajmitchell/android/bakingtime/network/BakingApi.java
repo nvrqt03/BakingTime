@@ -9,5 +9,5 @@ import retrofit2.http.GET;
 
 public interface BakingApi {
     @GET("topher/2017/May/59121517_baking/baking.json")
-    Observable<List<Recipe>> getRecipeApi();
+    Observable<List<Recipe>> getRecipes(); // need to define why I'm using observable here.
 }
