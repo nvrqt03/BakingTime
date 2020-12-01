@@ -27,58 +27,56 @@ public class MainActivity extends AppCompatActivity implements  RecipeAdapter.On
 
     ActivityMainBinding mBinding;
     public static final String TAG = "MainActivity.class";
-    Retrofit retrofit;
     private RecyclerView recyclerView;
-    private RecipeAdapter recipeAdapter;
     private List<Recipe> recipeList;
+    BakingApi bakingApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         recyclerView = mBinding.recipeRv;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recipeAdapter = new RecipeAdapter(MainActivity.this, recipeList, recipeAdapter.mOnRecipeListener);
-        recyclerView.setAdapter(recipeAdapter);
+
+        Retrofit retrofit = RetrofitClient.getInstance();
+        bakingApi = retrofit.create(BakingApi.class);
 
         //recipeList = new ArrayList<>();
-        Observable<List<Recipe>> observable = RetrofitClient.getBakingApi().getRecipes();
+        Observable<List<Recipe>> observable = bakingApi.getRecipes();
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Recipe>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
-        Log.d(TAG, "onCreate: " + observable.toString());
+                    }
 
+                    @Override
+                    public void onNext(@NonNull List<Recipe> recipes) {
+                        Log.d(TAG, "onNext: " + recipes.toString());
+                        displayData(recipes);
+                    }
 
-//        @NonNull Observable<Recipe> recipeObservable = Observable
-//                .fromIterable(observable)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread());
-//
-//        recipeObservable.subscribe(new Observer<Recipe>() {
-//            @Override
-//            public void onSubscribe(@NonNull Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(@NonNull Recipe recipe) {
-//                recipeList.add(recipe);
-//
-//
-//            }
-//
-//            @Override
-//            public void onError(@NonNull Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//                Log.d(TAG, "onNext: it worked!" );
-//            }
-//        });
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e(TAG, "onError: ", e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
     }
 
+    private void displayData(List<Recipe> recipes) {
+        RecipeAdapter adapter = new RecipeAdapter(this, recipes);
+        recyclerView.setAdapter(adapter);
+    }
 
     @Override
     public void onRecipeClick(Recipe recipe) {
