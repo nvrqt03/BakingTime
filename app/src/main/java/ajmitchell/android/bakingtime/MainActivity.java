@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements  RecipeAdapter.On
                     public void onNext(@NonNull List<Recipe> recipes) {
                         Log.d(TAG, "onNext: " + recipes.toString());
                         displayData(recipes);
+                        mBinding.setVariable(BR.recipe, recipes);
                     }
 
                     @Override
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements  RecipeAdapter.On
     }
 
     private void displayData(List<Recipe> recipes) {
-        RecipeAdapter adapter = new RecipeAdapter(this, recipes);
+        RecipeAdapter adapter = new RecipeAdapter(recipes, this::onRecipeClick);
         recyclerView.setAdapter(adapter);
     }
 
