@@ -15,8 +15,10 @@ import ajmitchell.android.bakingtime.models.Ingredient;
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
     private List<Ingredient> ingredientList;
+    Context context;
 
-    public IngredientAdapter(List<Ingredient> ingredientList) {
+    public IngredientAdapter(Context context, List<Ingredient> ingredientList) {
+        this.context = context;
         this.ingredientList = ingredientList;
     }
 

@@ -23,8 +23,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     private List<Recipe> recipeList;
     public OnRecipeListener mOnRecipeListener;
+    Context context;
 
-    public RecipeAdapter(List<Recipe> recipes, OnRecipeListener listener) { //, OnRecipeListener onRecipeListener
+    public RecipeAdapter(Context context, List<Recipe> recipes, OnRecipeListener listener) { //, OnRecipeListener onRecipeListener
+        this.context = context;
         this.recipeList = recipes;
         this.mOnRecipeListener = listener;
     }
@@ -42,7 +44,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe recipeResults = recipeList.get(position);
-        holder.bind(recipeResults, mOnRecipeListener);
+        holder.bind(recipeResults);
 
 
 //        Recipe recipeResults = recipeList.get(position);
@@ -66,15 +68,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private RecipeItemBinding binding;
+        OnRecipeListener onRecipeListener;
 
         public ViewHolder(@NonNull RecipeItemBinding binding, OnRecipeListener onRecipeListener) {
             super(binding.getRoot());
             this.binding = binding;
+            this.onRecipeListener = onRecipeListener;
         }
 
-        public void bind(Recipe recipe, OnRecipeListener listener) {
+        public void bind(Recipe recipe) {
             binding.setRecipe(recipe);
-            binding.executePendingBindings();
+            //binding.executePendingBindings();
         }
     }
     

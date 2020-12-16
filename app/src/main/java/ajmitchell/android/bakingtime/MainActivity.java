@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -75,12 +76,14 @@ public class MainActivity extends AppCompatActivity implements  RecipeAdapter.On
     }
 
     private void displayData(List<Recipe> recipes) {
-        RecipeAdapter adapter = new RecipeAdapter(recipes, this::onRecipeClick);
+        RecipeAdapter adapter = new RecipeAdapter(MainActivity.this, recipes, this::onRecipeClick);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onRecipeClick(Recipe recipe) {
-
+        Intent intent = new Intent(MainActivity.this, RecipeDetailActivity.class);
+        intent.putExtra("Recipe Details", recipe);
+        startActivity(intent);
     }
 }

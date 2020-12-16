@@ -17,8 +17,10 @@ import ajmitchell.android.bakingtime.models.Step;
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
 
     private List<Step> stepList;
+    Context context;
 
-    public StepAdapter(List<Step> stepList) {
+    public StepAdapter(Context context, List<Step> stepList) {
+        this.context = context;
         this.stepList = stepList;
     }
 

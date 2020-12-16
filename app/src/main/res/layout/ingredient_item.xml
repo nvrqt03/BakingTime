@@ -17,21 +17,21 @@
             android:id="@+id/ingredient_quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{ingredient.quantity.toString()"
+            android:text="@{String.valueOf(ingredient.quantity)}"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/ingredient_measure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{ingredient.measure"
+            android:text="@{ingredient.measure}"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/ingredient_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{ingredient.ingredient"
+            android:text="@{ingredient.ingredient}"
             android:textSize="16sp" />
 
     </LinearLayout>

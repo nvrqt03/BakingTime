@@ -18,9 +18,10 @@
             type="ajmitchell.android.bakingtime.models.Ingredient" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         tools:context=".RecipeDetailActivity">
 
         <TextView
@@ -39,8 +40,6 @@
             android:id="@+id/steps_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-    </FrameLayout>
-
+    </LinearLayout>
 
 </layout>
