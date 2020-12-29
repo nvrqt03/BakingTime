@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements  RecipeAdapter.On
     public static final String TAG = "MainActivity.class";
     private RecyclerView recyclerView;
     private List<Recipe> recipeList;
+    private RecipeAdapter adapter;
     BakingApi bakingApi;
 
     @Override
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements  RecipeAdapter.On
                     @Override
                     public void onNext(@NonNull List<Recipe> recipes) {
                         Log.d(TAG, "onNext: " + recipes.toString());
+
                         displayData(recipes);
                         mBinding.setVariable(BR.recipe, recipes);
                     }
@@ -76,7 +78,8 @@ public class MainActivity extends AppCompatActivity implements  RecipeAdapter.On
     }
 
     private void displayData(List<Recipe> recipes) {
-        RecipeAdapter adapter = new RecipeAdapter(MainActivity.this, recipes, this::onRecipeClick);
+        RecipeAdapter.OnRecipeListener onRecipeListener = null;
+        adapter = new RecipeAdapter(MainActivity.this, recipes, onRecipeListener);
         recyclerView.setAdapter(adapter);
     }
 
@@ -85,5 +88,6 @@ public class MainActivity extends AppCompatActivity implements  RecipeAdapter.On
         Intent intent = new Intent(MainActivity.this, RecipeDetailActivity.class);
         intent.putExtra("Recipe Details", recipe);
         startActivity(intent);
+        Log.d(TAG, "onRecipeClick: clicked!");
     }
 }

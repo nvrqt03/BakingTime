@@ -15,6 +15,7 @@ import ajmitchell.android.bakingtime.adapters.StepAdapter;
 import ajmitchell.android.bakingtime.databinding.ActivityMainBinding;
 import ajmitchell.android.bakingtime.databinding.ActivityRecipeDetailBinding;
 import ajmitchell.android.bakingtime.databinding.RecipeItemBinding;
+import ajmitchell.android.bakingtime.models.Recipe;
 import ajmitchell.android.bakingtime.models.Step;
 
 public class RecipeDetailActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private RecyclerView stepRecyclerView;
     private StepAdapter stepAdapter;
     private List<Step> stepList;
+    Recipe mRecipe;
 
 
     @Override
@@ -37,10 +39,17 @@ public class RecipeDetailActivity extends AppCompatActivity {
         stepRecyclerView.setLayoutManager(layoutManager);
         stepAdapter = new StepAdapter(RecipeDetailActivity.this, stepList);
 
+
+
         Intent intent = getIntent();
-        if (intent == null) {
+        if (intent != null) {
+            mRecipe = intent.getParcelableExtra("Recipe Details");
+        } else {
             closeOnError();
         }
+
+        mBinding.setRecipe(mRecipe);
+
     }
     private void closeOnError() {
         finish();
