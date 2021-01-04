@@ -18,28 +18,14 @@
             type="ajmitchell.android.bakingtime.models.Ingredient" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/recipe_detail_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".RecipeDetailActivity">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{recipe.name}"
-            android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{ingredients.ingredient"
-            android:textSize="16sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/steps_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    </FrameLayout>
 
 </layout>

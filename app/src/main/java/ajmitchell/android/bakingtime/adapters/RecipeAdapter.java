@@ -4,56 +4,40 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import ajmitchell.android.bakingtime.R;
 import ajmitchell.android.bakingtime.databinding.RecipeItemBinding;
-import ajmitchell.android.bakingtime.models.Ingredient;
 import ajmitchell.android.bakingtime.models.Recipe;
-import ajmitchell.android.bakingtime.models.Step;
-import io.reactivex.rxjava3.core.Observer;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder>  {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>  {
 
     private List<Recipe> recipeList;
-    public OnRecipeListener mOnRecipeListener;
+    private final RecipeItemClickListener mListener;
     Context context;
 
-    public RecipeAdapter(Context context, List<Recipe> recipes, OnRecipeListener listener) { //, OnRecipeListener onRecipeListener
-        this.context = context;
+    public RecipeAdapter(List<Recipe> recipes, RecipeItemClickListener listener) { //, OnRecipeListener onRecipeListener
         this.recipeList = recipes;
-        this.mOnRecipeListener = listener;
+        this.mListener = listener;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        RecipeItemBinding recipeItemBinding = RecipeItemBinding.inflate(inflater, parent, false);
-        ViewHolder viewHolder = new ViewHolder(recipeItemBinding, mOnRecipeListener);
-        return viewHolder;
+    public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        RecipeItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.recipe_item, parent, false);
+        return new RecipeViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Recipe recipeResults = recipeList.get(position);
-        holder.bind(recipeResults, mOnRecipeListener);
+    public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
+        holder.bind(recipeList.get(position), mListener);
 
-
-//        Recipe recipeResults = recipeList.get(position);
-//        List<Step> steps = recipeResults.getSteps();
-//        List<Ingredient> ingredient = recipeResults.getIngredients();
-//        holder.bind(recipeResults, steps.get(position), ingredient.get(position));
-//        holder.binding.re = recipeList.get(position);
-//        holder.binding.executePendingBindings();
-        //holder.bind(steps.get(position));
     }
 
     @Override
@@ -65,32 +49,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RecipeViewHolder extends RecyclerView.ViewHolder {
 
         private RecipeItemBinding binding;
-        OnRecipeListener onRecipeListener;
 
-        public ViewHolder(@NonNull RecipeItemBinding binding, OnRecipeListener onRecipeListener) {
+        public RecipeViewHolder(@NonNull RecipeItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            this.onRecipeListener = onRecipeListener;
-
         }
 
-        public void bind(Recipe recipe, OnRecipeListener mOnRecipeListener) {
+        public void bind(Recipe recipe, RecipeItemClickListener clickListener) {
             binding.setRecipe(recipe);
-            //binding.getClickListener();
-            binding.setClickListener(mOnRecipeListener);
+            binding.setRecipeItemClick(clickListener);
             binding.executePendingBindings();
         }
 
-        @Override
-        public void onClick(View view) {
-            onRecipeListener.onRecipeClick(recipeList.get(getAdapterPosition()));
-        }
     }
     
-    public interface OnRecipeListener {
-        void onRecipeClick(Recipe recipe);
+    public interface RecipeItemClickListener {
+        void onRecipeItemClick(Recipe recipe);
     }
 }
