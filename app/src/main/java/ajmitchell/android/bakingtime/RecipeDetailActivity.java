@@ -33,6 +33,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Recipe recipe = getIntent().getExtras().getParcelable("recipe");
         Ingredient ingredient = getIntent().getExtras().getParcelable("ingredient");
         Step step = getIntent().getExtras().getParcelable("step");
+
         mBinding.setRecipe(recipe);
         mBinding.setIngredients(ingredient);
         mBinding.setStep(step);

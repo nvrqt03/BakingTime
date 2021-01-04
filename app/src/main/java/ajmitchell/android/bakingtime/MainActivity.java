@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
     @Override
     public void onRecipeItemClick(Recipe recipe) {
-        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        Intent intent = new Intent(MainActivity.this, RecipeDetailActivity.class);
         Ingredient ingredient = new Ingredient();
         Step step = new Step();
         intent.putExtra("ingredient", (Parcelable) ingredient);

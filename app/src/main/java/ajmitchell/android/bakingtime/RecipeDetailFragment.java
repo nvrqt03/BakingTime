@@ -46,20 +46,5 @@ public class RecipeDetailFragment extends Fragment {
 
         return binding.getRoot();
     }
-/*
-mRecipe = new Recipe();
-        ingredient = new Ingredient();
-        step = new Step();
-
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            mRecipe = bundle.getParcelable("Recipe Details");
-            ingredient = bundle.getParcelable("Recipe Details");
-            step = bundle.getParcelable("Recipe Details");
-        }
-        binding.setRecipe(mRecipe);
-        binding.setIngredients(ingredient);
-        binding.setStep(step);
- */
-
 }
+
