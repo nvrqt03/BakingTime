@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.Toast;
 
 import java.util.List;
@@ -32,17 +33,21 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Recipe recipe = intent.getExtras().getParcelable("recipeIntent");
-        mBinding.setRecipe(recipe);
+        //mBinding.setRecipe(recipe);
 
-        initFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("recipe", recipe);
+        bundle.putParcelable("ingredient", (Parcelable) recipe.getIngredients());
+        bundle.putParcelable("step", (Parcelable) recipe.getSteps());
 
-    }
+        RecipeDetailFragment fragment = new RecipeDetailFragment();
+        fragment.setArguments(bundle);
 
-    private void initFragment() {
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.recipe_detail, recipeDetailFragment)
+                .addToBackStack(String.valueOf(recipeDetailFragment))
                 .commit();
     }
 

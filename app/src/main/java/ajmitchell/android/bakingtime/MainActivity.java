@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         recyclerView = mBinding.recipeRv;
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RecipeAdapter(recipeList, listener);
@@ -94,14 +95,13 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         intent.putExtra("recipeIntent", recipe);
         startActivity(intent);
 
-
-
-        RecipeDetailFragment fragment = new RecipeDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("recipe", recipe);
-        bundle.putParcelable("ingredient", (Parcelable) recipe.getIngredients());
-        bundle.putParcelable("step", (Parcelable) recipe.getSteps());
-        fragment.setArguments(bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("recipe", recipe);
+//        bundle.putParcelable("ingredient", (Parcelable) recipe.getIngredients());
+//        bundle.putParcelable("step", (Parcelable) recipe.getSteps());
+//
+//        RecipeDetailFragment fragment = new RecipeDetailFragment();
+//        fragment.setArguments(bundle);
 
         Log.d(TAG, "onRecipeClick: clicked!");
     }

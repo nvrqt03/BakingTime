@@ -55,6 +55,6 @@ public class RecipeDetailFragment extends Fragment {
         binding.setStep(step);
 
         return binding.getRoot();
-}
+    }
 }
 

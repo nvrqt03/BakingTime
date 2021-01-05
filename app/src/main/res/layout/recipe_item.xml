@@ -24,6 +24,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/recipe_item_cardView"
             android:layout_margin="2dp"
             app:cardCornerRadius="3dp"
             app:cardElevation="2dp"
