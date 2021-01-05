@@ -13,7 +13,9 @@ import java.util.List;
 
 import ajmitchell.android.bakingtime.R;
 import ajmitchell.android.bakingtime.databinding.RecipeItemBinding;
+import ajmitchell.android.bakingtime.models.Ingredient;
 import ajmitchell.android.bakingtime.models.Recipe;
+import ajmitchell.android.bakingtime.models.Step;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>  {
 

@@ -2,6 +2,7 @@ package ajmitchell.android.bakingtime;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ import ajmitchell.android.bakingtime.models.Recipe;
 import ajmitchell.android.bakingtime.models.Step;
 import ajmitchell.android.bakingtime.network.BakingApi;
 import ajmitchell.android.bakingtime.network.RetrofitClient;
+import io.reactivex.rxjava3.android.MainThreadDisposable;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
@@ -63,9 +65,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
                     @Override
                     public void onNext(@NonNull List<Recipe> recipes) {
-
                         displayData(recipes);
-                        //mBinding.setVariable(BR.recipe, recipes);
                     }
 
                     @Override
@@ -82,22 +82,27 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     }
 
     private void displayData(List<Recipe> recipes) {
-        adapter = new RecipeAdapter(recipes, listener);
+        adapter = new RecipeAdapter(recipes, this);
         recyclerView.setAdapter(adapter);
     }
 
 
     @Override
     public void onRecipeItemClick(Recipe recipe) {
+
         Intent intent = new Intent(MainActivity.this, RecipeDetailActivity.class);
-        Ingredient ingredient = new Ingredient();
-        Step step = new Step();
-        intent.putExtra("ingredient", (Parcelable) ingredient);
-        intent.putExtra("recipe", recipe);
-        intent.putExtra("step", (Parcelable) step);
+        intent.putExtra("recipeIntent", recipe);
         startActivity(intent);
 
-        Log.d(TAG, "onRecipeClick: clicked!");
 
+
+        RecipeDetailFragment fragment = new RecipeDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("recipe", recipe);
+        bundle.putParcelable("ingredient", (Parcelable) recipe.getIngredients());
+        bundle.putParcelable("step", (Parcelable) recipe.getSteps());
+        fragment.setArguments(bundle);
+
+        Log.d(TAG, "onRecipeClick: clicked!");
     }
 }

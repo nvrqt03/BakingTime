@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.prefs.PreferenceChangeEvent;
+
 import ajmitchell.android.bakingtime.databinding.FragmentRecipeDetailBinding;
 import ajmitchell.android.bakingtime.models.Ingredient;
 import ajmitchell.android.bakingtime.models.Recipe;
@@ -20,13 +22,25 @@ import ajmitchell.android.bakingtime.models.Step;
 public class RecipeDetailFragment extends Fragment {
 
     FragmentRecipeDetailBinding binding;
-    Recipe mRecipe;
-    Ingredient ingredient;
-    Step step;
+
+    private Recipe recipe;
+    private Ingredient ingredient;
+    private Step step;
 
     //mandatory  constructor for instantiating the fragment (fragment recipe detail)
     public RecipeDetailFragment() {
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            recipe = bundle.getParcelable("recipe");
+            ingredient = bundle.getParcelable("ingredient");
+            step = bundle.getParcelable("step");
+        }
     }
 
     // inflates the fragment layout - using databinding
@@ -36,15 +50,11 @@ public class RecipeDetailFragment extends Fragment {
         // inflate the fragment_recipe_detail layout
         binding = FragmentRecipeDetailBinding.inflate(inflater);
 
-        Recipe recipe = new Recipe();
-        Ingredient ingredient = new Ingredient();
-        Step step = new Step();
-
         binding.setRecipe(recipe);
         binding.setIngredients(ingredient);
         binding.setStep(step);
 
         return binding.getRoot();
-    }
+}
 }
 

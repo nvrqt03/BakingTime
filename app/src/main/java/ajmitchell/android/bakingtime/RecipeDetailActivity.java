@@ -30,23 +30,20 @@ public class RecipeDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
 
-        Recipe recipe = getIntent().getExtras().getParcelable("recipe");
-        Ingredient ingredient = getIntent().getExtras().getParcelable("ingredient");
-        Step step = getIntent().getExtras().getParcelable("step");
-
+        Intent intent = getIntent();
+        Recipe recipe = intent.getExtras().getParcelable("recipeIntent");
         mBinding.setRecipe(recipe);
-        mBinding.setIngredients(ingredient);
-        mBinding.setStep(step);
-        init();
+
+        initFragment();
+
     }
 
-    private void init() {
+    private void initFragment() {
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.recipe_detail_fragment, recipeDetailFragment)
+                .replace(R.id.recipe_detail, recipeDetailFragment)
                 .commit();
     }
-
 
 }

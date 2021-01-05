@@ -86,5 +86,18 @@ public class Recipe implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
 
     }
+
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+
+        @Override
+        public Recipe createFromParcel(Parcel parcel) {
+            return new Recipe();
+        }
+
+        @Override
+        public Recipe[] newArray(int i) {
+            return new Recipe[i];
+        }
+    };
 }
 

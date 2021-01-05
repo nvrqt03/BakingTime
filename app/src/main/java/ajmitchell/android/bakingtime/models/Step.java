@@ -1,9 +1,12 @@
 package ajmitchell.android.bakingtime.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Step {
+public class Step implements Parcelable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -59,4 +62,27 @@ public class Step {
     public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
+
+    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
+
+        @Override
+        public Step createFromParcel(Parcel parcel) {
+            return new Step();
+        }
+
+        @Override
+        public Step[] newArray(int i) {
+            return new Step[i];
+        }
+    };
 }
